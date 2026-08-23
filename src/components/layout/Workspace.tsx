@@ -1,19 +1,11 @@
 import Editor from "@monaco-editor/react";
 
 import type { OpenedFile } from "../../types/editor";
+import type { ConstructraSettings } from "../../services/settings/types";
 
 interface WorkspaceProps {
   openedFile: OpenedFile | null;
-  settings: Record<string, unknown> | null;
-}
-
-interface EditorSettings {
-  fontSize?: number;
-  tabSize?: number;
-  wordWrap?: "off" | "on" | "wordWrapColumn" | "bounded";
-  minimap?: {
-    enabled?: boolean;
-  };
+  settings: ConstructraSettings | null;
 }
 
 function getLanguage(filename: string) {
@@ -89,7 +81,7 @@ function getLanguage(filename: string) {
 }
 
 function Workspace({ openedFile, settings }: WorkspaceProps) {
-  const editorSettings = (settings?.editor as EditorSettings | undefined) ?? {};
+  const editorSettings = settings?.editor;
 
   if (!openedFile) {
     return (
@@ -116,14 +108,14 @@ function Workspace({ openedFile, settings }: WorkspaceProps) {
           theme="vs-dark"
           options={{
             automaticLayout: true,
-            fontSize: editorSettings.fontSize ?? 13,
+            fontSize: editorSettings?.fontSize ?? 13,
             minimap: {
-              enabled: editorSettings.minimap?.enabled ?? true,
+              enabled: editorSettings?.minimap.enabled ?? true,
             },
             scrollBeyondLastLine: false,
             smoothScrolling: true,
-            tabSize: editorSettings.tabSize ?? 2,
-            wordWrap: editorSettings.wordWrap ?? "off",
+            tabSize: editorSettings?.tabSize ?? 2,
+            wordWrap: editorSettings?.wordWrap ?? "off",
           }}
         />
       </div>
