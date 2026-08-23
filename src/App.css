@@ -391,3 +391,31 @@ button {
 
   gap: 12px;
 }
+
+.project-root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-root-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #d8d8d8;
+
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.project-path {
+  overflow: hidden;
+
+  color: #6f7177;
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

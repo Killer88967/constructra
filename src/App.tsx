@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { open } from "@tauri-apps/plugin-dialog";
+
 import "./App.css";
 
 import ActivityBar from "./components/layout/ActivityBar";
@@ -7,6 +10,19 @@ import BottomPanel from "./components/layout/BottomPanel";
 import StatusBar from "./components/layout/StatusBar";
 
 function App() {
+  const [projectPath, setProjectPath] = useState<string | null>(null);
+
+  async function openFolder() {
+    const selected = await open({
+      directory: true,
+      multiple: false,
+    });
+
+    if (typeof selected === "string") {
+      setProjectPath(selected);
+    }
+  }
+
   return (
     <div className="app">
       <header className="titlebar">
@@ -27,7 +43,8 @@ function App() {
 
         <div className="main-area">
           <div className="workspace-row">
-            <Sidebar />
+            <Sidebar projectPath={projectPath} onOpenFolder={openFolder} />
+
             <Workspace />
           </div>
 
