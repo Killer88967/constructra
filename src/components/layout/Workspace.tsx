@@ -83,7 +83,7 @@ function getLanguage(filename: string) {
 }
 
 function configureMonaco(monaco: Monaco) {
-  monaco.languages.json.jsonDefaults.setDiagnosticOptions({
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
     validate: true,
     allowComments: true,
 
