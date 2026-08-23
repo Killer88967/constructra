@@ -1,13 +1,4 @@
-export type JsonSchemaType =
-  | "string"
-  | "number"
-  | "integer"
-  | "boolean"
-  | "object"
-  | "array"
-  | "null";
-
-export interface JsonSchema {
+export interface JsonSchemaBase {
   $schema?: string;
   $id?: string;
   $ref?: string;
@@ -15,33 +6,11 @@ export interface JsonSchema {
   title?: string;
   description?: string;
 
-  type?: JsonSchemaType | JsonSchemaType[];
-
   default?: unknown;
   examples?: unknown[];
 
   enum?: unknown[];
   const?: unknown;
-
-  properties?: Record<string, JsonSchema>;
-  patternProperties?: Record<string, JsonSchema>;
-
-  required?: string[];
-
-  additionalProperties?: boolean | JsonSchema;
-
-  items?: JsonSchema | JsonSchema[];
-
-  minimum?: number;
-  maximum?: number;
-
-  minLength?: number;
-  maxLength?: number;
-
-  minItems?: number;
-  maxItems?: number;
-
-  pattern?: string;
 
   oneOf?: JsonSchema[];
   anyOf?: JsonSchema[];
@@ -52,11 +21,63 @@ export interface JsonSchema {
   deprecated?: boolean;
 }
 
-export interface RegisteredJsonSchema extends JsonSchema {
+export interface JsonStringSchema extends JsonSchemaBase {
+  type: "string";
+
+  minLength?: number;
+  maxLength?: number;
+  pattern?: string;
+}
+
+export interface JsonNumberSchema extends JsonSchemaBase {
+  type: "number" | "integer";
+
+  minimum?: number;
+  maximum?: number;
+}
+
+export interface JsonBooleanSchema extends JsonSchemaBase {
+  type: "boolean";
+}
+
+export interface JsonNullSchema extends JsonSchemaBase {
+  type: "null";
+}
+
+export interface JsonArraySchema extends JsonSchemaBase {
+  type: "array";
+
+  items?: JsonSchema | JsonSchema[];
+
+  minItems?: number;
+  maxItems?: number;
+}
+
+export interface JsonObjectSchema extends JsonSchemaBase {
+  type: "object";
+
+  properties?: Record<string, JsonSchema>;
+  patternProperties?: Record<string, JsonSchema>;
+
+  required?: string[];
+
+  additionalProperties?: boolean | JsonSchema;
+}
+
+export type JsonSchema =
+  | JsonStringSchema
+  | JsonNumberSchema
+  | JsonBooleanSchema
+  | JsonNullSchema
+  | JsonArraySchema
+  | JsonObjectSchema
+  | JsonSchemaBase;
+
+export type RegisteredJsonSchema = JsonSchema & {
   $schema: string;
   title: string;
   description: string;
-}
+};
 
 export interface SchemaRegistration {
   uri: string;
