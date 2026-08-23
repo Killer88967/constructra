@@ -1,9 +1,12 @@
+import type { FileEntry } from "../../types/filesystem";
+
 interface SidebarProps {
   projectPath: string | null;
+  projectFiles: FileEntry[];
   onOpenFolder: () => void;
 }
 
-function Sidebar({ projectPath, onOpenFolder }: SidebarProps) {
+function Sidebar({ projectPath, projectFiles, onOpenFolder }: SidebarProps) {
   const pathParts = projectPath
     ? projectPath.split(/[\\/]/).filter(Boolean)
     : [];
@@ -23,7 +26,17 @@ function Sidebar({ projectPath, onOpenFolder }: SidebarProps) {
               <strong>{projectName}</strong>
             </div>
 
-            <div className="project-path">{projectPath}</div>
+            <div className="file-tree">
+              {projectFiles.map((entry) => (
+                <div className="file-tree-entry" key={entry.path}>
+                  <span className="file-tree-icon">
+                    {entry.isDirectory ? "▸" : ""}
+                  </span>
+
+                  <span>{entry.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="empty-explorer">

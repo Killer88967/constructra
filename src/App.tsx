@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { invoke } from "@tauri-apps/api/core";
 import { open } from "@tauri-apps/plugin-dialog";
 
 import "./App.css";
@@ -9,8 +10,11 @@ import Workspace from "./components/layout/Workspace";
 import BottomPanel from "./components/layout/BottomPanel";
 import StatusBar from "./components/layout/StatusBar";
 
+import type { FileEntry } from "./types/filesystem";
+
 function App() {
   const [projectPath, setProjectPath] = useState<string | null>(null);
+  const [projectFiles, setProjectFiles] = useState<FileEntry[]>([]);
 
   async function openFolder() {
     const selected = await open({
@@ -18,9 +22,16 @@ function App() {
       multiple: false,
     });
 
-    if (typeof selected === "string") {
-      setProjectPath(selected);
+    if (typeof selected !== "string") {
+      return;
     }
+
+    const files = await invoke<FileEntry[]>("read_directory", {
+      path: selected,
+    });
+
+    setProjectPath(selected);
+    setProjectFiles(files);
   }
 
   return (
@@ -43,7 +54,11 @@ function App() {
 
         <div className="main-area">
           <div className="workspace-row">
-            <Sidebar projectPath={projectPath} onOpenFolder={openFolder} />
+            <Sidebar
+              projectPath={projectPath}
+              projectFiles={projectFiles}
+              onOpenFolder={openFolder}
+            />
 
             <Workspace />
           </div>
