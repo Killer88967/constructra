@@ -4,6 +4,16 @@ import type { OpenedFile } from "../../types/editor";
 
 interface WorkspaceProps {
   openedFile: OpenedFile | null;
+  settings: Record<string, unknown> | null;
+}
+
+interface EditorSettings {
+  fontSize?: number;
+  tabSize?: number;
+  wordWrap?: "off" | "on" | "wordWrapColumn" | "bounded";
+  minimap?: {
+    enabled?: boolean;
+  };
 }
 
 function getLanguage(filename: string) {
@@ -62,6 +72,7 @@ function getLanguage(filename: string) {
     case "yml":
       return "yaml";
 
+    case "svg":
     case "xml":
       return "xml";
 
@@ -77,7 +88,9 @@ function getLanguage(filename: string) {
   }
 }
 
-function Workspace({ openedFile }: WorkspaceProps) {
+function Workspace({ openedFile, settings }: WorkspaceProps) {
+  const editorSettings = (settings?.editor as EditorSettings | undefined) ?? {};
+
   if (!openedFile) {
     return (
       <main className="workspace">
@@ -103,14 +116,14 @@ function Workspace({ openedFile }: WorkspaceProps) {
           theme="vs-dark"
           options={{
             automaticLayout: true,
-            fontSize: 13,
+            fontSize: editorSettings.fontSize ?? 13,
             minimap: {
-              enabled: true,
+              enabled: editorSettings.minimap?.enabled ?? true,
             },
             scrollBeyondLastLine: false,
             smoothScrolling: true,
-            tabSize: 2,
-            wordWrap: "off",
+            tabSize: editorSettings.tabSize ?? 2,
+            wordWrap: editorSettings.wordWrap ?? "off",
           }}
         />
       </div>

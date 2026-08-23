@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { invoke } from "@tauri-apps/api/core";
 // import { open } from "@tauri-apps/plugin-dialog";
 import { filesystem, filesystemEnvironment } from "./services/filesystem";
+import { settings } from "./services/settings";
+import type { SettingsResult } from "./services/settings/types";
 
 import "./App.css";
 
@@ -18,6 +20,9 @@ function App() {
   const [projectPath, setProjectPath] = useState<string | null>(null);
   const [projectFiles, setProjectFiles] = useState<FileEntry[]>([]);
   const [openedFile, setOpenedFile] = useState<OpenedFile | null>(null);
+  const [settingsState, setSettingsState] = useState<SettingsResult | null>(
+    null,
+  );
 
   // async function openFolder() {
   //   const selected = await open({
@@ -49,6 +54,8 @@ function App() {
     setProjectPath(selected);
     setProjectFiles(files);
     setOpenedFile(null);
+
+    await loadSettings(selected);
   }
 
   // async function openFile(entry: FileEntry) {
@@ -72,6 +79,16 @@ function App() {
       content,
     });
   }
+
+  async function loadSettings(workspacePath?: string | null) {
+    const result = await settings.getSettings(workspacePath);
+
+    setSettingsState(result);
+  }
+
+  useEffect(() => {
+    loadSettings(null);
+  }, []);
 
   return (
     <div className="app">
@@ -100,7 +117,10 @@ function App() {
               onOpenFile={openFile}
             />
 
-            <Workspace openedFile={openedFile} />
+            <Workspace
+              openedFile={openedFile}
+              settings={settingsState?.effective ?? null}
+            />
           </div>
 
           <BottomPanel />
