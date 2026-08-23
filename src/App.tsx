@@ -11,10 +11,12 @@ import BottomPanel from "./components/layout/BottomPanel";
 import StatusBar from "./components/layout/StatusBar";
 
 import type { FileEntry } from "./types/filesystem";
+import type { OpenedFile } from "./types/editor";
 
 function App() {
   const [projectPath, setProjectPath] = useState<string | null>(null);
   const [projectFiles, setProjectFiles] = useState<FileEntry[]>([]);
+  const [openedFile, setOpenedFile] = useState<OpenedFile | null>(null);
 
   async function openFolder() {
     const selected = await open({
@@ -32,6 +34,18 @@ function App() {
 
     setProjectPath(selected);
     setProjectFiles(files);
+  }
+
+  async function openFile(entry: FileEntry) {
+    const content = await invoke<string>("read_file", {
+      path: entry.path,
+    });
+
+    setOpenedFile({
+      name: entry.name,
+      path: entry.path,
+      content,
+    });
   }
 
   return (
@@ -58,9 +72,10 @@ function App() {
               projectPath={projectPath}
               projectFiles={projectFiles}
               onOpenFolder={openFolder}
+              onOpenFile={openFile}
             />
 
-            <Workspace />
+            <Workspace openedFile={openedFile} />
           </div>
 
           <BottomPanel />

@@ -5,9 +5,15 @@ interface SidebarProps {
   projectPath: string | null;
   projectFiles: FileEntry[];
   onOpenFolder: () => void;
+  onOpenFile: (entry: FileEntry) => void;
 }
 
-function Sidebar({ projectPath, projectFiles, onOpenFolder }: SidebarProps) {
+function Sidebar({
+  projectPath,
+  projectFiles,
+  onOpenFolder,
+  onOpenFile,
+}: SidebarProps) {
   const pathParts = projectPath
     ? projectPath.split(/[\\/]/).filter(Boolean)
     : [];
@@ -27,7 +33,7 @@ function Sidebar({ projectPath, projectFiles, onOpenFolder }: SidebarProps) {
               <strong>{projectName}</strong>
             </div>
 
-            <FileTree entries={projectFiles} />
+            <FileTree entries={projectFiles} onOpenFile={onOpenFile} />
           </div>
         ) : (
           <div className="empty-explorer">

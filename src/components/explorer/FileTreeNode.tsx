@@ -6,15 +6,17 @@ import type { FileEntry } from "../../types/filesystem";
 interface FileTreeNodeProps {
   entry: FileEntry;
   depth?: number;
+  onOpenFile: (entry: FileEntry) => void;
 }
 
-function FileTreeNode({ entry, depth = 0 }: FileTreeNodeProps) {
+function FileTreeNode({ entry, depth = 0, onOpenFile }: FileTreeNodeProps) {
   const [expanded, setExpanded] = useState(false);
   const [children, setChildren] = useState<FileEntry[] | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function toggleDirectory() {
+  async function handleClick() {
     if (!entry.isDirectory) {
+      onOpenFile(entry);
       return;
     }
 
@@ -40,7 +42,7 @@ function FileTreeNode({ entry, depth = 0 }: FileTreeNodeProps) {
       <div
         className="file-tree-entry"
         style={{ paddingLeft: `${depth * 14}px` }}
-        onClick={toggleDirectory}
+        onClick={handleClick}
       >
         <span className="file-tree-icon">
           {entry.isDirectory ? (loading ? "…" : expanded ? "⌄" : "›") : ""}
@@ -51,7 +53,12 @@ function FileTreeNode({ entry, depth = 0 }: FileTreeNodeProps) {
 
       {expanded &&
         children?.map((child) => (
-          <FileTreeNode key={child.path} entry={child} depth={depth + 1} />
+          <FileTreeNode
+            key={child.path}
+            entry={child}
+            depth={depth + 1}
+            onOpenFile={onOpenFile}
+          />
         ))}
     </>
   );
