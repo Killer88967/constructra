@@ -1,4 +1,5 @@
-import { invoke } from "@tauri-apps/api/core";
+// import { invoke } from "@tauri-apps/api/core";
+import { filesystem } from "../../services/filesystem";
 import { useState } from "react";
 
 import type { FileEntry } from "../../types/filesystem";
@@ -24,9 +25,10 @@ function FileTreeNode({ entry, depth = 0, onOpenFile }: FileTreeNodeProps) {
       setLoading(true);
 
       try {
-        const result = await invoke<FileEntry[]>("read_directory", {
-          path: entry.path,
-        });
+        // const result = await invoke<FileEntry[]>("read_directory", {
+        //   path: entry.path,
+        // });
+        const result = await filesystem.readDirectory(entry.path);
 
         setChildren(result);
       } finally {

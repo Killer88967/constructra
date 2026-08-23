@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { invoke } from "@tauri-apps/api/core";
-import { open } from "@tauri-apps/plugin-dialog";
+// import { invoke } from "@tauri-apps/api/core";
+// import { open } from "@tauri-apps/plugin-dialog";
+import { filesystem } from "./services/filesystem";
 
 import "./App.css";
 
@@ -18,28 +19,52 @@ function App() {
   const [projectFiles, setProjectFiles] = useState<FileEntry[]>([]);
   const [openedFile, setOpenedFile] = useState<OpenedFile | null>(null);
 
-  async function openFolder() {
-    const selected = await open({
-      directory: true,
-      multiple: false,
-    });
+  // async function openFolder() {
+  //   const selected = await open({
+  //     directory: true,
+  //     multiple: false,
+  //   });
 
-    if (typeof selected !== "string") {
+  //   if (typeof selected !== "string") {
+  //     return;
+  //   }
+
+  //   const files = await invoke<FileEntry[]>("read_directory", {
+  //     path: selected,
+  //   });
+
+  //   setProjectPath(selected);
+  //   setProjectFiles(files);
+  // }
+
+  async function openFolder() {
+    const selected = await filesystem.openDirectory();
+
+    if (!selected) {
       return;
     }
 
-    const files = await invoke<FileEntry[]>("read_directory", {
-      path: selected,
-    });
+    const files = await filesystem.readDirectory(selected);
 
     setProjectPath(selected);
     setProjectFiles(files);
+    setOpenedFile(null);
   }
 
+  // async function openFile(entry: FileEntry) {
+  //   const content = await invoke<string>("read_file", {
+  //     path: entry.path,
+  //   });
+
+  //   setOpenedFile({
+  //     name: entry.name,
+  //     path: entry.path,
+  //     content,
+  //   });
+  // }
+
   async function openFile(entry: FileEntry) {
-    const content = await invoke<string>("read_file", {
-      path: entry.path,
-    });
+    const content = await filesystem.readFile(entry.path);
 
     setOpenedFile({
       name: entry.name,
