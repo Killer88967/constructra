@@ -1,4 +1,6 @@
-import Editor from "@monaco-editor/react";
+import Editor, { type Monaco } from "@monaco-editor/react";
+
+import { builtinSchemas } from "../../services/schemas";
 
 import type { OpenedFile } from "../../types/editor";
 import type { ConstructraSettings } from "../../services/settings/types";
@@ -80,6 +82,19 @@ function getLanguage(filename: string) {
   }
 }
 
+function configureMonaco(monaco: Monaco) {
+  monaco.languages.json.jsonDefaults.setDiagnosticOptions({
+    valudate: true,
+    allowComments: true,
+
+    schemas: builtinSchemas.map((registration) => ({
+      uri: registration.uri,
+      fileMatch: registration.fileMatch,
+      schema: registration.schema,
+    })),
+  });
+}
+
 function Workspace({ openedFile, settings }: WorkspaceProps) {
   const editorSettings = settings?.editor;
 
@@ -106,6 +121,7 @@ function Workspace({ openedFile, settings }: WorkspaceProps) {
           language={getLanguage(openedFile.name)}
           value={openedFile.content}
           theme="vs-dark"
+          beforeMount={configureMonaco}
           options={{
             automaticLayout: true,
             fontSize: editorSettings?.fontSize ?? 13,

@@ -5,6 +5,11 @@ export const MOCK_PROJECT_PATH = "/mock/constructra-demo";
 export const mockDirectories: Record<string, FileEntry[]> = {
   "/mock/constructra-demo": [
     {
+      name: ".constructra",
+      path: "/mock/constructra-demo/.constructra",
+      isDirectory: true,
+    },
+    {
       name: "public",
       path: "/mock/constructra-demo/public",
       isDirectory: true,
@@ -89,6 +94,14 @@ export const mockDirectories: Record<string, FileEntry[]> = {
     {
       name: "format.ts",
       path: "/mock/constructra-demo/src/utils/format.ts",
+      isDirectory: false,
+    },
+  ],
+
+  "/mock/constructra-demo/.constructra/settings.json": [
+    {
+      name: "settings.json",
+      path: "/mock/constructra-demo/.constructra/settings.json",
       isDirectory: false,
     },
   ],
@@ -224,4 +237,17 @@ export default Button;
   "/mock/constructra-demo/public/favicon.svg": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <rect width="100" height="100" rx="20" />
 </svg>`,
+
+  "/mock/constructra-demo/.constructra/settings.json": `{
+  "$schema": "constructra://schemas/settings",
+
+  "editor": {
+    "fontSize": 14,
+    "tabSize": 4,
+    "wordWrap": "off",
+    "minimap": {
+      "enabled": true
+    }
+  }
+}`,
 };
