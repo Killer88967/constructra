@@ -98,7 +98,7 @@ export const mockDirectories: Record<string, FileEntry[]> = {
     },
   ],
 
-  "/mock/constructra-demo/.constructra/settings.json": [
+  "/mock/constructra-demo/.constructra": [
     {
       name: "settings.json",
       path: "/mock/constructra-demo/.constructra/settings.json",

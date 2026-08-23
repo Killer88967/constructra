@@ -84,7 +84,7 @@ function getLanguage(filename: string) {
 
 function configureMonaco(monaco: Monaco) {
   monaco.languages.json.jsonDefaults.setDiagnosticOptions({
-    valudate: true,
+    validate: true,
     allowComments: true,
 
     schemas: builtinSchemas.map((registration) => ({
