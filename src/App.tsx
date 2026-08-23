@@ -12,6 +12,7 @@ import Sidebar from "./components/layout/Sidebar";
 import Workspace from "./components/layout/Workspace";
 import BottomPanel from "./components/layout/BottomPanel";
 import StatusBar from "./components/layout/StatusBar";
+import ErrorBoundary from "./components/common/ErrorBoundary";
 
 import type { FileEntry } from "./types/filesystem";
 import type { OpenedFile } from "./types/editor";
@@ -117,10 +118,12 @@ function App() {
               onOpenFile={openFile}
             />
 
-            <Workspace
-              openedFile={openedFile}
-              settings={settingsState?.effective ?? null}
-            />
+            <ErrorBoundary key={openedFile?.path ?? "workspace"}>
+              <Workspace
+                openedFile={openedFile}
+                settings={settingsState?.effective ?? null}
+              />
+            </ErrorBoundary>
           </div>
 
           <BottomPanel />

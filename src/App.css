@@ -535,3 +535,34 @@ button {
   min-width: 0;
   min-height: 0;
 }
+
+.workspace-error {
+  padding: 32px;
+
+  color: #c6c8cc;
+}
+
+.workspace-error > div {
+  max-width: 520px;
+}
+
+.workspace-error h2 {
+  margin: 0 0 8px;
+
+  color: #e4e4e4;
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.workspace-error p {
+  margin: 0;
+
+  color: #8f9197;
+
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  font-size: 12px;
+
+  overflow-wrap: anywhere;
+}

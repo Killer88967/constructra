@@ -100,11 +100,7 @@
     }
   },
 
-  "forwardPorts": [
-    1420,
-    3000,
-    5173
-  ],
+  "forwardPorts": [1420, 3000, 5173],
 
   "portsAttributes": {
     "1420": {
