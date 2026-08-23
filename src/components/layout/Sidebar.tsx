@@ -1,4 +1,5 @@
 import type { FileEntry } from "../../types/filesystem";
+import FileTree from "../explorer/FileTree";
 
 interface SidebarProps {
   projectPath: string | null;
@@ -26,17 +27,7 @@ function Sidebar({ projectPath, projectFiles, onOpenFolder }: SidebarProps) {
               <strong>{projectName}</strong>
             </div>
 
-            <div className="file-tree">
-              {projectFiles.map((entry) => (
-                <div className="file-tree-entry" key={entry.path}>
-                  <span className="file-tree-icon">
-                    {entry.isDirectory ? "▸" : ""}
-                  </span>
-
-                  <span>{entry.name}</span>
-                </div>
-              ))}
-            </div>
+            <FileTree entries={projectFiles} />
           </div>
         ) : (
           <div className="empty-explorer">

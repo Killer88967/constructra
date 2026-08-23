@@ -456,3 +456,24 @@ button {
 
   color: #85878d;
 }
+
+.file-tree-entry {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+  height: 22px;
+
+  padding-right: 6px;
+
+  color: #b9bbc1;
+
+  font-size: 12px;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.file-tree-entry:hover {
+  background: #232529;
+}
