@@ -34,8 +34,7 @@
         "vscode-icons-team.vscode-icons",
         "eamodio.gitlens",
 
-        "jock.svg",
-        "ymotongpoo.licenser"
+        "ultram4rine.vscode-choosealicense"
       ],
 
       "settings": {
