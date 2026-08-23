@@ -1,3 +1,5 @@
+mod settings;
+
 use std::fs;
 
 #[derive(serde::Serialize)]
@@ -50,7 +52,7 @@ pub fn run() {
         ::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
-        .invoke_handler(tauri::generate_handler![read_directory, read_file])
+        .invoke_handler(tauri::generate_handler![read_directory, read_file, settings::get_settings])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

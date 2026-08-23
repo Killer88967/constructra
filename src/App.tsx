@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { invoke } from "@tauri-apps/api/core";
 // import { open } from "@tauri-apps/plugin-dialog";
-import { filesystem } from "./services/filesystem";
+import { filesystem, filesystemEnvironment } from "./services/filesystem";
 
 import "./App.css";
 
@@ -107,7 +107,7 @@ function App() {
         </div>
       </div>
 
-      <StatusBar />
+      <StatusBar environment={filesystemEnvironment} />
     </div>
   );
 }

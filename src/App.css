@@ -392,6 +392,19 @@ button {
   gap: 12px;
 }
 
+.status-dev {
+  padding: 1px 5px;
+
+  border: 1px solid #494c53;
+  border-radius: 3px;
+
+  color: #c8cad0;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 .project-root {
   display: flex;
   flex-direction: column;
