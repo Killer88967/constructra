@@ -1,50 +1,42 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
+import ActivityBar from "./components/layout/ActivityBar";
+import Sidebar from "./components/layout/Sidebar";
+import Workspace from "./components/layout/Workspace";
+import BottomPanel from "./components/layout/BottomPanel";
+import StatusBar from "./components/layout/StatusBar";
+
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
+    <div className="app">
+      <header className="titlebar">
+        <div className="titlebar-brand">Constructra</div>
 
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <nav className="titlebar-menu">
+          <button>File</button>
+          <button>Edit</button>
+          <button>View</button>
+          <button>Run</button>
+          <button>Terminal</button>
+          <button>Help</button>
+        </nav>
+      </header>
+
+      <div className="app-body">
+        <ActivityBar />
+
+        <div className="main-area">
+          <div className="workspace-row">
+            <Sidebar />
+            <Workspace />
+          </div>
+
+          <BottomPanel />
+        </div>
       </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
 
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+      <StatusBar />
+    </div>
   );
 }
 
