@@ -516,24 +516,9 @@ button {
   background: #111214;
 }
 
-.plain-editor {
+.monaco-container {
   flex: 1;
 
   min-width: 0;
   min-height: 0;
-
-  margin: 0;
-  padding: 16px;
-
-  overflow: auto;
-
-  color: #d4d4d4;
-  background: #111214;
-
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-
-  font-size: 13px;
-  line-height: 1.55;
-
-  white-space: pre;
 }
