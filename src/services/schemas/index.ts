@@ -1,4 +1,4 @@
-import { constructraSettingsSchema } from "./builtins/contructraSettings";
+import { constructraSettingsSchema } from "./builtins/constructraSettings";
 
 import type { SchemaRegistration } from "./types";
 

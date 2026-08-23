@@ -12,39 +12,52 @@ export const constructraSettingsSchema: SchemaRegistration = {
     $schema: "http://json-schema.org/draft-07/schema#",
 
     title: "Constructra Settings",
-    description: "Workspace and user settings for Constructra.",
+
+    description:
+      "Configuration settings for Constructra user, workspace, and local scopes.",
 
     type: "object",
+
     additionalProperties: false,
 
     properties: {
       $schema: {
         type: "string",
-        description: "Schema URI used for Constructra settings validation.",
+
+        description:
+          "Schema URI used to validate and provide IntelliSense for this settings file.",
+
         default: "constructra://schemas/settings",
       },
 
       editor: {
         type: "object",
-        description: "Editor behavior and appearance.",
+
+        description: "Controls editor behavior and appearance.",
 
         additionalProperties: false,
 
         properties: {
           fontSize: {
             type: "number",
+
             minimum: 6,
             maximum: 72,
+
             default: 13,
+
             description: "Controls the editor font size in pixels.",
           },
 
           tabSize: {
             type: "integer",
+
             minimum: 1,
             maximum: 16,
+
             default: 2,
-            description: "Number of spaces represented by a tab.",
+
+            description: "Controls the number of spaces represented by a tab.",
           },
 
           wordWrap: {
@@ -54,11 +67,12 @@ export const constructraSettingsSchema: SchemaRegistration = {
 
             default: "off",
 
-            description: "Controls how lines wrap in the editor.",
+            description: "Controls how long lines wrap inside the editor.",
           },
 
           minimap: {
             type: "object",
+
             description: "Controls the editor minimap.",
 
             additionalProperties: false,
@@ -66,8 +80,11 @@ export const constructraSettingsSchema: SchemaRegistration = {
             properties: {
               enabled: {
                 type: "boolean",
+
                 default: true,
-                description: "Whether the editor minimap is visible.",
+
+                description:
+                  "Controls whether the editor minimap is displayed.",
               },
             },
           },
@@ -76,7 +93,9 @@ export const constructraSettingsSchema: SchemaRegistration = {
 
       workbench: {
         type: "object",
-        description: "Workbench layout settings.",
+
+        description:
+          "Controls Constructra workbench layout and interface behavior.",
 
         additionalProperties: false,
 
@@ -89,9 +108,12 @@ export const constructraSettingsSchema: SchemaRegistration = {
             properties: {
               width: {
                 type: "number",
+
                 minimum: 120,
+
                 default: 250,
-                description: "Default width of the sidebar in pixels.",
+
+                description: "Controls the default sidebar width in pixels.",
               },
             },
           },
@@ -104,9 +126,13 @@ export const constructraSettingsSchema: SchemaRegistration = {
             properties: {
               height: {
                 type: "number",
+
                 minimum: 80,
+
                 default: 190,
-                description: "Default height of the bottom panel in pixels.",
+
+                description:
+                  "Controls the default bottom panel height in pixels.",
               },
             },
           },
@@ -115,7 +141,8 @@ export const constructraSettingsSchema: SchemaRegistration = {
 
       files: {
         type: "object",
-        description: "File handling behavior.",
+
+        description: "Controls file handling behavior.",
 
         additionalProperties: false,
 
@@ -127,7 +154,8 @@ export const constructraSettingsSchema: SchemaRegistration = {
 
             default: "off",
 
-            description: "Controls automatic saving of modified files.",
+            description:
+              "Controls whether modified files are saved automatically.",
           },
         },
       },
